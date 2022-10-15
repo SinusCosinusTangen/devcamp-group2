@@ -25,6 +25,10 @@ func InitializeRouter() (router *gin.Engine) {
 		apiRoute.POST("/tps", controller.CreateTps)
 		apiRoute.GET("/ready/:id", controller.SetTpsReady)
 		apiRoute.GET("/ready-waste", controller.GetAllReadyTps)
+		apiRoute.POST("/buy-waste", controller.BuyWaste)
+		apiRoute.GET("/vendor/:id", controller.GetVendor)
+		apiRoute.POST("/vendor", controller.CreateVendor)
+		apiRoute.GET("/seed-db", controller.SeedDB)
 	}
 
 	return router

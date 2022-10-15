@@ -151,3 +151,54 @@ func SetTpsReady(c *gin.Context) {
 
 	c.JSON(http.StatusOK, tps)
 }
+
+func BuyWaste(c *gin.Context) {
+
+	var input models.BuyWasteRequest
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	service.ProcessWaste(input)
+}
+
+func GetVendor(c *gin.Context) {
+
+	sid := c.Param("id")
+	id, err := strconv.Atoi(sid)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	vendor, err := service.GetVendorById(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, vendor)
+}
+
+func CreateVendor(c *gin.Context) {
+
+	var input models.VendorRequest
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	vendor, err := service.CreateVendor(input)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, vendor)
+}
+
+func SeedDB(c *gin.Context) {
+
+	service.SeedDB()
+}

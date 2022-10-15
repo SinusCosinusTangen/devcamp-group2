@@ -27,3 +27,13 @@ type TPSRequest struct {
 	Name    string `json:"name"`
 	Address string `json:"address"`
 }
+
+type VendorRequest struct {
+	Name    string `json:"name"`
+	Address string `json:"address"`
+}
+
+type BuyWasteRequest struct {
+	TpsId  int     `json:"tps_id"`
+	Weight float64 `json:"weight"`
+}

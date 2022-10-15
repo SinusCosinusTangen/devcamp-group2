@@ -129,3 +129,17 @@ func SetTpsReady(id int) (models.TPS, error) {
 
 	return tps, nil
 }
+
+func SetTpsUnready(id int, weight float64) (models.TPS, error) {
+	db := utils.Database
+
+	var tps models.TPS
+
+	db.First(&tps, id)
+	tps.IsReady = false
+	tps.Weight -= weight
+	tps.UpdatedAt = time.Now()
+	db.Save(&tps)
+
+	return tps, nil
+}
