@@ -9,6 +9,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func Index(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"result": "Hello World"})
+}
+
 func CreateUser(c *gin.Context) {
 
 	var input models.UserRequest

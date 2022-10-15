@@ -9,6 +9,11 @@ import (
 func InitializeRouter() (router *gin.Engine) {
 	router = gin.Default()
 
+	defaultRoute := router.Group("")
+	{
+		defaultRoute.GET("/", controller.Index)
+	}
+
 	apiRoute := router.Group("/api")
 	{
 		apiRoute.POST("/user", controller.CreateUser)

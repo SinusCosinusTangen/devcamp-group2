@@ -1,24 +1,13 @@
-FROM --platform=linux/arm64 golang:1.18 AS build
+FROM golang:1.18-alpine
 
-ENV GO111MODULE=on
-
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y git
-
-WORKDIR /go/src/didaur-tokopedia/
+WORKDIR /app
 
 COPY go.mod go.sum ./
+
 RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o main .
+RUN go build -o main .
 
-FROM alpine
-COPY --from=build /go/src/didaur-tokopedia/main go/bin/didaur-tokopedia/
-
-EXPOSE 8000
-WORKDIR go/bin/didaur-tokopedia/
-
-CMD ["./main"]
+CMD ["/app/main"]
