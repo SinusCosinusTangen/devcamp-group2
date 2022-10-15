@@ -9,7 +9,7 @@ services:
       - 8000:8000
   db:
     image: postgres:latest
-    container_name: db_devcamp
+    container_name: db-devcamp
     restart: always
     environment:
       POSTGRES_USER: postgres
