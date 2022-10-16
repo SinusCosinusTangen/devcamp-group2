@@ -11,7 +11,7 @@ public extension DaurEndpoint {
 
     struct FetchListDTO {
 
-        public static let url = "http://20.24.244.160:8000/api/waste"
+        public static let url = "http://20.24.244.160:8000/api/ready-waste"
 
         public struct Response {
             let body: Body
@@ -32,25 +32,23 @@ public extension DaurEndpoint.FetchListDTO.Response {
     }
 
     struct Result: Codable {
-        let id, userID: Int?
+        let tpsID: Int?
         let address: String?
+        let weight: Int?
 
         enum CodingKeys: String, CodingKey {
-            case id
-            case userID = "user_id"
-            case address
+            case tpsID = "tps_id"
+            case address, weight
         }
         
         public func toDomain() -> ResultDomain {
             return ResultDomain(
-                id: self.id ?? 0,
-                userID: self.userID ?? 0,
-                address: self.address ?? ""
+                tpsID: self.tpsID ?? 0,
+                address: self.address ?? "",
+                weight: self.weight ?? 0
             )
         }
     }
-
-
 }
 
 

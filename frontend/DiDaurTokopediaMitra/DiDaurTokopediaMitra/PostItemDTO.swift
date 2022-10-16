@@ -11,7 +11,7 @@ public extension DaurEndpoint {
 
     struct PostItemDTO {
 
-        public static let url = "http://20.247.50.226:8000/api/confirm"
+        public static let url = "http://20.24.244.160:8000/api/confirm"
 
         public struct Request {
             let Parameter: Parameter

@@ -11,7 +11,7 @@ public extension DaurEndpoint {
 
     struct FetchUserDTO {
 
-        public static let url = "http://20.24.244.160:8000/api/user/1"
+        public static let url = "http://20.24.244.160:8000/api/vendor/1"
 
         public struct Response {
             let body: Body
@@ -25,12 +25,10 @@ public extension DaurEndpoint.FetchUserDTO.Response {
 
     struct Body: Codable {
         let id: Int?
-        let name, address: String?
-        let coins, exp: Int?
-        let createdAt, updatedAt: String?
+        let name, address, createdAt, updatedAt: String?
 
         enum CodingKeys: String, CodingKey {
-            case id, name, address, coins, exp
+            case id, name, address
             case createdAt = "created_at"
             case updatedAt = "updated_at"
         }
@@ -40,14 +38,11 @@ public extension DaurEndpoint.FetchUserDTO.Response {
                 id: self.id ?? 0,
                 name: self.name ?? "",
                 address: self.address ?? "",
-                coins: self.coins ?? 0,
-                exp: self.exp ?? 0,
                 createdAt: self.createdAt ?? "",
                 updatedAt: self.updatedAt ?? ""
             )
         }
     }
-
 }
 
 
