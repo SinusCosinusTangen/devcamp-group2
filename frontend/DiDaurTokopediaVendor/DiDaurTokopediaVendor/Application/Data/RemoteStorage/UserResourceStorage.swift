@@ -39,7 +39,7 @@ extension DefaultUserResourceStorage: UserResourceStorage {
     }
     public func fetchBuy(tpsId: Int, weight: Int) -> Observable<ApiResult<SuccessResponseDomain?, ErrorResponseDomain>> {
         let parameter = DaurEndpoint.FetchBuyDTO.Request.Parameter(tpsID: tpsId, weight: weight).get()
-        let request = URLRequestBuilder(baseURL: DaurEndpoint.FetchBuyDTO.url, path: "", method: .get)
+        let request = URLRequestBuilder(baseURL: DaurEndpoint.FetchBuyDTO.url, path: "", method: .post)
         request.addParameter(parameter)
         return self.service.sendRequest(with: request.build())
     }
