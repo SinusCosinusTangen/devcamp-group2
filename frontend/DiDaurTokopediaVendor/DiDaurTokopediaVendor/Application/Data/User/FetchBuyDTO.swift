@@ -16,12 +16,30 @@ public extension DaurEndpoint {
         public struct Response {
             let body: Body
         }
+        
+        public struct Request {
+            let parameter: Parameter
+        }
 
     }
 
 }
+public extension DaurEndpoint.FetchBuyDTO.Request {
+    struct Parameter {
+        var tpsID: Int = 1
+        var weight: Int
+        
+        public func get() -> [String:Any] {
+            return [
+                "tps_id": self.tpsID,
+                "weight": self.weight
+            ]
+        }
+    }
+}
 
 public extension DaurEndpoint.FetchBuyDTO.Response {
+    
 
     struct Body: Codable {
         let tpsID, weight: Int?

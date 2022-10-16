@@ -10,10 +10,12 @@ import Foundation
 import RxSwift
 
 public struct FetchBuyUseCaseRequest {
+    var tpsId: Int
+    var weight: Int
 }
 
 public protocol FetchBuyUseCase {
-    func execute(_ request: FetchBuyUseCaseRequest) -> Observable<ApiResult<FetchBuyDomain?,ErrorResponseDomain>>
+    func execute(_ request: FetchBuyUseCaseRequest) -> Observable<ApiResult<SuccessResponseDomain?,ErrorResponseDomain>>
 }
 
 public final class DefaultFetchBuyUseCase {
@@ -27,9 +29,8 @@ public final class DefaultFetchBuyUseCase {
 }
 
 extension DefaultFetchBuyUseCase: FetchBuyUseCase {
-    
-    public func execute(_ request: FetchBuyUseCaseRequest) -> Observable<ApiResult<FetchBuyDomain?, ErrorResponseDomain>> {
-        return self.repository.fetchBuy()
+    public func execute(_ request: FetchBuyUseCaseRequest) -> Observable<ApiResult<SuccessResponseDomain?, ErrorResponseDomain>> {
+        return self.repository.fetchBuy(tpsId: request.tpsId, weight: request.weight)
     }
     
 }

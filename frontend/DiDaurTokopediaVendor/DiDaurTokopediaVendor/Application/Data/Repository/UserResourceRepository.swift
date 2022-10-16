@@ -11,7 +11,7 @@ import RxSwift
 protocol UserResourceRepository {
     func fetchUser() -> Observable<ApiResult<FetchUserDomain?,ErrorResponseDomain>>
     func fetchList() -> Observable<ApiResult<FetchListDomain?,ErrorResponseDomain>>
-    func fetchBuy() -> Observable<ApiResult<FetchBuyDomain?,ErrorResponseDomain>>
+    func fetchBuy(tpsId: Int, weight: Int) -> Observable<ApiResult<SuccessResponseDomain?,ErrorResponseDomain>>
 //    func postItem(wasteId: Int, weight: Int) -> Observable<ApiResult<SuccessResponseDomain?,ErrorResponseDomain>>
 //    func postNotif() -> Observable<ApiResult<SuccessResponseDomain?,ErrorResponseDomain>>
 }
@@ -50,16 +50,8 @@ extension DefaultUserResourceRepository: UserResourceRepository {
         }
     }
     
-    func fetchBuy() -> Observable<ApiResult<FetchBuyDomain?, ErrorResponseDomain>> {
-        return self.storage.fetchBuy().flatMap { observable -> Observable<ApiResult<FetchBuyDomain?, ErrorResponseDomain>> in
-            switch observable {
-            case .success(let response):
-                guard let response = response else { return .just(.success(nil))}
-                return .just(.success(response.toDomain()))
-            case .failure(let error):
-                return .just(.failure(error))
-            }
-        }
+    func fetchBuy(tpsId: Int, weight: Int) -> Observable<ApiResult<SuccessResponseDomain?, ErrorResponseDomain>> {
+        return self.storage.fetchBuy(tpsId: tpsId, weight: weight)
     }
     
 //    func postItem(wasteId: Int, weight: Int) -> Observable<ApiResult<SuccessResponseDomain?, ErrorResponseDomain>> {
