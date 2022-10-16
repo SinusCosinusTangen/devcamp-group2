@@ -49,18 +49,18 @@ public final class DefaultREDetailViewModel: REDetailViewModel {
     let route: REDetailViewModelRoute
     let disposeBag = DisposeBag()
 
-//    private let postItemUseCase: PostItemUseCase
+    private let fetchBuyUseCase: FetchBuyUseCase
     // MARK: Output ViewModel Variable
     public var resultDomain: ResultDomain
     
     init(
         requestValue: REDetailViewModelRequestValue,
-        route: REDetailViewModelRoute
-//        postItemUseCase: PostItemUseCase
+        route: REDetailViewModelRoute,
+        fetchBuyUseCase: FetchBuyUseCase
     ) {
         self.requestValue = requestValue
         self.route = route
-//        self.postItemUseCase = postItemUseCase
+        self.fetchBuyUseCase = fetchBuyUseCase
         self.resultDomain = requestValue.result
     }
 
@@ -73,28 +73,28 @@ public extension DefaultREDetailViewModel {
     }
     
     func didClickDoneButton(weight: Int) {
-//        self.doPostItemUseCase(weight: weight)
+        self.doPostItemUseCase(weight: weight)
     }
 
 }
 
 // MARK: Private Function
 private extension DefaultREDetailViewModel {
-//    func doPostItemUseCase(weight: Int) {
-//        let wasteId = self.requestValue.result.id
-//        let requestValue = PostItemUseCaseRequest(wasteId: wasteId, weight: weight)
-//
-//        self.postItemUseCase.execute(requestValue).subscribe { [weak self] apiResult in
-//            guard let self = self else { return }
-//            switch apiResult {
-//            case .success(_):
-//                self.route.start(.dashboard)
-//            case .failure(let errorDomain):
-//                let error = NSError.create(with: errorDomain.details?.joined(separator: " ") ?? "Failed to post item")
-//                print(error)
-//            }
-//        } onError: { error in
-//            print(error)
-//        }.disposed(by: self.disposeBag)
-//    }
+    func doPostItemUseCase(weight: Int) {
+        let tpsId = self.requestValue.result.tpsID
+        let requestValue = FetchBuyUseCaseRequest(tpsId: tpsId, weight: weight)
+
+        self.fetchBuyUseCase.execute(requestValue).subscribe { [weak self] apiResult in
+            guard let self = self else { return }
+            switch apiResult {
+            case .success(_):
+                self.route.start(.dashboard)
+            case .failure(let errorDomain):
+                let error = NSError.create(with: errorDomain.details?.joined(separator: " ") ?? "Failed to post item")
+                print(error)
+            }
+        } onError: { error in
+            print(error)
+        }.disposed(by: self.disposeBag)
+    }
 }

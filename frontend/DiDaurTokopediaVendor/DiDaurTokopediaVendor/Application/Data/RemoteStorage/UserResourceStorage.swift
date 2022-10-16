@@ -11,7 +11,7 @@ import RxSwift
 public protocol UserResourceStorage {
     func fetchUser() -> Observable<ApiResult<DaurEndpoint.FetchUserDTO.Response.Body?,ErrorResponseDomain>>
     func fetchList() -> Observable<ApiResult<DaurEndpoint.FetchListDTO.Response.Body?,ErrorResponseDomain>>
-    func fetchBuy() -> Observable<ApiResult<DaurEndpoint.FetchBuyDTO.Response.Body?,ErrorResponseDomain>>
+    func fetchBuy(tpsId: Int, weight: Int) -> Observable<ApiResult<SuccessResponseDomain?,ErrorResponseDomain>>
 //    func postItem(wasteId: Int, weight: Int) -> Observable<ApiResult<SuccessResponseDomain?,ErrorResponseDomain>>
 //    func postNotif() -> Observable<ApiResult<SuccessResponseDomain?,ErrorResponseDomain>>
 }
@@ -37,9 +37,11 @@ extension DefaultUserResourceStorage: UserResourceStorage {
         let request = URLRequestBuilder(baseURL: DaurEndpoint.FetchListDTO.url, path: "", method: .get)
         return self.service.sendRequest(with: request.build(), for: DaurEndpoint.FetchListDTO.Response.Body.self)
     }
-    public func fetchBuy() -> Observable<ApiResult<DaurEndpoint.FetchBuyDTO.Response.Body?, ErrorResponseDomain>> {
+    public func fetchBuy(tpsId: Int, weight: Int) -> Observable<ApiResult<SuccessResponseDomain?, ErrorResponseDomain>> {
+        let parameter = DaurEndpoint.FetchBuyDTO.Request.Parameter(tpsID: tpsId, weight: weight).get()
         let request = URLRequestBuilder(baseURL: DaurEndpoint.FetchBuyDTO.url, path: "", method: .get)
-        return self.service.sendRequest(with: request.build(), for: DaurEndpoint.FetchBuyDTO.Response.Body.self)
+        request.addParameter(parameter)
+        return self.service.sendRequest(with: request.build())
     }
     
 //    public func postItem(wasteId: Int, weight: Int) -> Observable<ApiResult<SuccessResponseDomain?, ErrorResponseDomain>> {

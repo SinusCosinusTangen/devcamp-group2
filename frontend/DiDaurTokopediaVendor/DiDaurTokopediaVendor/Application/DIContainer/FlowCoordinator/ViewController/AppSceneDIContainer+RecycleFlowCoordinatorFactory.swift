@@ -24,7 +24,7 @@ extension AppSceneDIContainer: RecycleFlowCoordinatorFactory {
     }
     
     func makeREDetailController(requestValue: REDetailViewModelRequestValue, route: REDetailViewModelRoute) -> REDetailController {
-        let viewModel = DefaultREDetailViewModel(requestValue: requestValue, route: route)
+        let viewModel = DefaultREDetailViewModel(requestValue: requestValue, route: route, fetchBuyUseCase: self.makeFetchBuyUseCase())
         return REDetailController.create(with: viewModel)
     }
 }
