@@ -68,6 +68,7 @@ public class DashboardCell: UITableViewCell {
         progressBar.center = self.center
         progressBar.trackTintColor = .lightGray
         progressBar.tintColor = .systemBlue
+        progressBar.progress = 0
         progressBar.makeRound(cornerRad: 5)
         return progressBar
     }()
@@ -242,8 +243,15 @@ public class DashboardCell: UITableViewCell {
             ]))
         self.addressLabel.attributedText = addressText
         
+        var exp = 0
+        if userDetail.exp % 100 == 0 {
+            exp = 0
+        } else {
+            exp = userDetail.exp - (100 * (userDetail.exp / 100))
+        }
+        
         let xpText = NSMutableAttributedString(
-            string: "\(userDetail.exp) XP",
+            string: "\(100 - exp) XP",
             attributes: [
                 NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .bold),
                 NSAttributedString.Key.foregroundColor: UIColor.black
@@ -256,7 +264,8 @@ public class DashboardCell: UITableViewCell {
             ]))
         self.xpLabel.attributedText = xpText
         
-        self.progessView.setProgress(Float(userDetail.exp), animated: true)
+        self.progessView.setProgress(Float(exp) / 100, animated: true)
+//        self.progessView.progress = Float(exp) / 100
         
         let coinText = NSMutableAttributedString(
             string: "Rp",

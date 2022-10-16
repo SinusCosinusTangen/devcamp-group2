@@ -11,7 +11,7 @@ public extension DaurEndpoint {
 
     struct FetchUserDTO {
 
-        public static let url = "http://20.247.50.226:8000/api/tps/1"
+        public static let url = "http://20.24.244.160:8000/api/tps/1"
 
         public struct Response {
             let body: Body

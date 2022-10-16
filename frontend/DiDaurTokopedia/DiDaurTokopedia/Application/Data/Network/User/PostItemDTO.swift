@@ -12,7 +12,7 @@ public extension DaurEndpoint {
     struct PostItemDTO {
 
         public static func getURL(id: Int) -> String {
-            return "http://18.207.189.252/api/recycle/\(id)"
+            return "http://20.24.244.160:8000/api/recycle/\(id)"
         }
 
         public struct Response {
